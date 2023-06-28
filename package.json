@@ -1,5 +1,5 @@
 {
-  "name": "@dph/react-native-picker-with-modal",
+  "name": "@wavedph/react-native-picker-with-modal",
   "version": "0.1.4",
   "description": "test",
   "main": "lib/commonjs/index",
