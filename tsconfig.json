@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-picker-with-modal": ["./src/index"]
+      "@dph/react-native-picker-with-modal": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

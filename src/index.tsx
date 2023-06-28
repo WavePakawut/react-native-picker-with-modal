@@ -1,4 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
+import Picker from './Picker';
 
 const LINKING_ERROR =
   `The package 'react-native-picker-with-modal' doesn't seem to be linked. Make sure: \n\n` +
@@ -20,3 +21,5 @@ const PickerWithModal = NativeModules.PickerWithModal
 export function multiply(a: number, b: number): Promise<number> {
   return PickerWithModal.multiply(a, b);
 }
+
+export { Picker };
