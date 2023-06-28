@@ -12,6 +12,8 @@ export interface PickerItemProps {
   selected: string | number;
   index: number;
   onPress: () => void;
+  selectedColor?: string;
+  notSelectedColor?: string;
 }
 
 const PickerItem: React.FC<PickerItemProps> = ({
@@ -19,6 +21,8 @@ const PickerItem: React.FC<PickerItemProps> = ({
   // index,
   selected,
   onPress,
+  selectedColor,
+  notSelectedColor,
 }) => {
   const isSelected = selected === data.value;
   return (
@@ -33,8 +37,8 @@ const PickerItem: React.FC<PickerItemProps> = ({
           styles.text,
           {
             color: isSelected
-              ? BaseColor.greenColor
-              : data?.color || BaseColor.text,
+              ? selectedColor || BaseColor.greenColor
+              : data?.color || notSelectedColor || BaseColor.text,
           },
         ]}
       >

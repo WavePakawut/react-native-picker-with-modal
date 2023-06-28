@@ -5,17 +5,29 @@ simple picker with modal
 ## Installation
 
 ```sh
-npm install react-native-picker-with-modal
+yarn add @wavedph/react-native-picker-with-modal
 ```
 
 ## Usage
 
 ```js
-import { multiply } from 'react-native-picker-with-modal';
+import { Picker } from '@wavedph/react-native-picker-with-modal';
 
 // ...
 
-const result = await multiply(3, 7);
+const [selected, setSelected] = React.useState < string | number > '');
+// ...
+<Picker
+  data={[
+    { value: 1, label: 'test1' },
+    { value: 2, label: 'test2' },
+    { value: 3, label: 'test3' },
+  ]}
+  selectedValue={selected}
+  onValueChange={(value) => {
+    setSelected(value);
+  }}
+/>;
 ```
 
 ## Contributing

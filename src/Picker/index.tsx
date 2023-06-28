@@ -25,11 +25,15 @@ const { wp } = getWpHp();
 const backImg = require('../assets/left.png');
 const downIcon = require('../assets/down-icon.png');
 
-interface PickerWProps {
+interface PickerProps {
   // mode?: 'normal' | 'wheel';
   data: PickerItemData[];
   headerTitle?: string;
   backgroundColor?: string;
+  color?: string;
+  selectedColor?: string;
+  notSelectedColor?: string;
+  disableColor?: string;
   style?: StyleProp<ViewStyle>;
   selectedValue: string | number;
   onValueChange: (value: string | number, index: number) => void;
@@ -39,7 +43,7 @@ interface PickerWProps {
   notSelectLabel?: string;
 }
 
-const PickerW: React.FC<PickerWProps> = ({
+const Picker: React.FC<PickerProps> = ({
   selectedValue,
   data,
   style,
@@ -49,6 +53,10 @@ const PickerW: React.FC<PickerWProps> = ({
   disable = false,
 
   backgroundColor,
+  color,
+  selectedColor,
+  notSelectedColor,
+  disableColor,
   isLoading = false,
   disableShadow = false,
   notSelectLabel,
@@ -69,6 +77,8 @@ const PickerW: React.FC<PickerWProps> = ({
           onValueChange(item.value, index);
           setShowModal(false);
         }}
+        selectedColor={selectedColor}
+        notSelectedColor={notSelectedColor}
         data={item}
         index={index}
         selected={selectedValue}
@@ -88,7 +98,8 @@ const PickerW: React.FC<PickerWProps> = ({
             ? {
                 ...(disableShadow ? {} : ShadowEle1),
                 shadowOpacity: 0.1,
-                backgroundColor: BaseColor.lightGrayColor + '77',
+                backgroundColor:
+                  disableColor || BaseColor.lightGrayColor + '77',
               }
             : {
                 ...(disableShadow ? {} : ShadowEle5),
@@ -101,9 +112,11 @@ const PickerW: React.FC<PickerWProps> = ({
           style={[
             styles.text,
             {
-              color: disable
-                ? BaseColor.grayColor
-                : selectedData?.color || BaseColor.greenColor,
+              color:
+                color ||
+                (disable
+                  ? BaseColor.grayColor
+                  : selectedData?.color || BaseColor.greenColor),
             },
           ]}
         >
@@ -192,7 +205,7 @@ const PickerW: React.FC<PickerWProps> = ({
   );
 };
 
-export default PickerW;
+export default Picker;
 
 const styles = StyleSheet.create({
   container: {

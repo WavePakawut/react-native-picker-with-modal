@@ -1,26 +1,23 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply, Picker } from '@wavedph/react-native-picker-with-modal';
+import { StyleSheet, View } from 'react-native';
+import { Picker } from '@wavedph/react-native-picker-with-modal';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 9).then(setResult);
-  }, []);
+  const [selected, setSelected] = React.useState<string | number>('');
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
       <Picker
         data={[
           { value: 1, label: 'test1' },
           { value: 2, label: 'test2' },
           { value: 3, label: 'test3' },
         ]}
-        selectedValue={1}
-        onValueChange={() => {}}
+        selectedValue={selected}
+        onValueChange={(value) => {
+          setSelected(value);
+        }}
       />
     </View>
   );
