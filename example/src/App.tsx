@@ -9,11 +9,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Picker
-        data={[
-          { value: 1, label: 'test1' },
-          { value: 2, label: 'test2' },
-          { value: 3, label: 'test3' },
-        ]}
+        data={[...Array(200).keys()].map((value, index) => {
+          return { value: index, label: 'test ' + value };
+        })}
         selectedValue={selected}
         onValueChange={(value) => {
           setSelected(value);

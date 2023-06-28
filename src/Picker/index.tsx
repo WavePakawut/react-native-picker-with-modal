@@ -9,8 +9,9 @@ import {
   View,
   ViewStyle,
   SafeAreaView,
+  BackHandler,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PickerItem, { PickerItemData } from './PickerItem';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 
@@ -61,8 +62,35 @@ const Picker: React.FC<PickerProps> = ({
   disableShadow = false,
   notSelectLabel,
 }) => {
+  const flRef = useRef<FlatList>(null);
   const [showModal, setShowModal] = useState(false);
   const selectedData = data.find((obj) => obj.value === selectedValue);
+  const backAction = useCallback(() => {
+    setShowModal(false);
+    return true;
+  }, []);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, [backAction]);
+  // const scrollToSelected = useCallback(() => {
+
+  // }, [showModal, flRef, selectedData, data]);
+  useEffect(() => {
+    // scrollToSelected();
+    if (flRef && flRef.current && showModal) {
+      const id = data.findIndex((value) => value === selectedData);
+      if (id !== -1) {
+        setTimeout(() => {
+          flRef?.current?.scrollToIndex({ animated: true, index: id });
+        }, 200);
+      }
+    }
+    return () => {};
+  }, [showModal, flRef, selectedData, data]);
 
   const renderItem = ({
     item,
@@ -182,6 +210,7 @@ const Picker: React.FC<PickerProps> = ({
 
           <View style={{ flex: 1 }}>
             <FlatList
+              ref={flRef}
               style={{ flex: 1, backgroundColor: BaseColor.whiteColor }}
               data={data}
               renderItem={renderItem}
@@ -195,6 +224,11 @@ const Picker: React.FC<PickerProps> = ({
                   )}
                 </View>
               }
+              getItemLayout={(_, index) => ({
+                length: 45, //  WIDTH + (MARGIN_HORIZONTAL * 2)
+                offset: 45 * index, //  ( WIDTH + (MARGIN_HORIZONTAL*2) ) * (index)
+                index,
+              })}
               ListFooterComponent={<View style={{ height: 10 }} />}
               keyExtractor={(_, index) => index.toString()}
             />
