@@ -125,13 +125,13 @@ const Picker: React.FC<PickerProps> = ({
           disable
             ? {
                 ...(disableShadow ? {} : ShadowEle1),
-                shadowOpacity: 0.1,
+                shadowOpacity: disableShadow ? undefined : 0.1,
                 backgroundColor:
                   disableColor || BaseColor.lightGrayColor + '77',
               }
             : {
                 ...(disableShadow ? {} : ShadowEle5),
-                shadowOpacity: 0.1,
+                shadowOpacity: disableShadow ? undefined : 0.1,
                 backgroundColor: backgroundColor || BaseColor.lightGrayColor2,
               },
         ]}
